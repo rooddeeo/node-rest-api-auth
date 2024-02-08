@@ -13,7 +13,10 @@ export const listContacts = async req => {
 };
 
 export const getContactById = async contactId => {
-	const readFileContacts = await Contact.findOne({ _id: contactId });
+	const readFileContacts = await Contact.findOne({ _id: contactId, owner: _id }).populate(
+		"owner",
+		"-_id email subscription",
+	);
 	return readFileContacts;
 };
 
