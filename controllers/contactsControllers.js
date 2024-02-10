@@ -48,14 +48,15 @@ export const deleteContact = async (req, res) => {
 
 export const createContact = async (req, res) => {
 	try {
-		const { value, error } = createContactSchema(req.user);
+		const { value, error } = createContactSchema(req.body);
 		if (error) {
 			const httpError = HttpError(400, error.message);
 			res.status(httpError.status).json({ error: httpError.message });
 			return;
 		}
+		const { name, email, phone, favorite } = value;
 		const { _id: owner } = req.user;
-		const newContact = await addContact({ ...value, owner });
+		const newContact = await addContact({ name, email, phone, favorite, owner });
 		res.status(201).json(newContact);
 	} catch (error) {
 		const httpError = HttpError(500, error.message);

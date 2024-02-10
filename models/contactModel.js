@@ -29,11 +29,11 @@ export const updateStatusContactSchema = data =>
 const contactSchema = new Schema({
 	name: {
 		type: String,
-		// required: [true, "Set name for contact"],
+		required: [true, "Set name for contact"],
 	},
 	email: {
 		type: String,
-		// required: true,
+		required: true,
 	},
 	phone: {
 		type: String,
