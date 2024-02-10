@@ -29,16 +29,14 @@ export const updateStatusContactSchema = data =>
 const contactSchema = new Schema({
 	name: {
 		type: String,
-		required: [true, "Set name for contact"],
+		// required: [true, "Set name for contact"],
 	},
 	email: {
 		type: String,
-		required: true,
-		unique: true,
+		// required: true,
 	},
 	phone: {
 		type: String,
-		unique: true,
 	},
 	favorite: {
 		type: Boolean,

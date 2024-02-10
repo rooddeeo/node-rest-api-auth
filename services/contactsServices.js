@@ -1,10 +1,11 @@
 import { Contact } from "../models/contactModel.js";
 
 export const listContacts = async req => {
+	const { _id: id } = req.params;
 	const { _id: owner } = req.user;
 	const { page = 1, limit = 10 } = req.query;
 	const skip = (page - 1) * limit;
-	const readFileContacts = await Contact.find({ owner })
+	const readFileContacts = await Contact.findOne({ id, owner })
 		.skip(skip)
 		.limit(limit)
 		.populate("owner", "-_id email subscription");
