@@ -12,8 +12,8 @@ export const listContacts = async req => {
 	return readFileContacts;
 };
 
-export const getContactById = async contactId => {
-	const readFileContacts = await Contact.findOne({ _id: contactId });
+export const getContactById = async (contactId, owner) => {
+	const readFileContacts = await Contact.findOne({ _id: contactId, owner });
 	return readFileContacts;
 };
 
@@ -22,17 +22,17 @@ export const addContact = async data => {
 	return readFileContacts;
 };
 
-export const removeContact = async contactId => {
-	const readFileContacts = await Contact.findByIdAndDelete(contactId);
+export const removeContact = async (contactId, owner) => {
+	const readFileContacts = await Contact.findByIdAndDelete({ _id: contactId, owner });
 	return readFileContacts;
 };
 
-export const contactUpdate = async (contactId, data) => {
-	const readFileContacts = await Contact.findByIdAndUpdate(contactId, data, { new: true });
+export const contactUpdate = async (contactId, owner, data) => {
+	const readFileContacts = await Contact.findByIdAndUpdate({ _id: contactId, owner }, data, { new: true });
 	return readFileContacts;
 };
 
-export const updateContactStatus = async (contactId, data) => {
-	const readFileContacts = await Contact.findByIdAndUpdate(contactId, data, { new: true });
+export const updateContactStatus = async (contactId, owner, data) => {
+	const readFileContacts = await Contact.findByIdAndUpdate({ _id: contactId, owner }, data, { new: true });
 	return readFileContacts;
 };

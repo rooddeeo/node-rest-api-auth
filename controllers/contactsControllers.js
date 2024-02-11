@@ -23,24 +23,12 @@ export const getAllContacts = async (req, res) => {
 export const getOneContact = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const contact = await getContactById(id);
+		const { _id: owner } = req.user;
+		const contact = await getContactById(id, owner);
 		if (!contact) {
 			return res.status(404).json({ messange: "Not Found" });
 		}
 		res.json(contact);
-	} catch (error) {
-		res.status(500).json(error.message);
-	}
-};
-
-export const deleteContact = async (req, res) => {
-	try {
-		const { id } = req.params;
-		const deleteContact = await removeContact(id);
-		if (!deleteContact) {
-			return res.status(404).json({ messange: "Not Found" });
-		}
-		res.json(deleteContact);
 	} catch (error) {
 		res.status(500).json(error.message);
 	}
@@ -64,6 +52,20 @@ export const createContact = async (req, res) => {
 	}
 };
 
+export const deleteContact = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const { _id: owner } = req.user;
+		const deleteContact = await removeContact(id, owner);
+		if (!deleteContact) {
+			return res.status(404).json({ messange: "Not Found" });
+		}
+		res.json(deleteContact);
+	} catch (error) {
+		res.status(500).json(error.message);
+	}
+};
+
 export const updateContact = async (req, res) => {
 	try {
 		if (Object.keys(req.body).length === 0) {
@@ -74,7 +76,8 @@ export const updateContact = async (req, res) => {
 			throw HttpError(400, error.message);
 		}
 		const { id } = req.params;
-		const result = await contactUpdate(id, req.body);
+		const { _id: owner } = req.user;
+		const result = await contactUpdate(id, owner, req.body);
 		res.status(200).json(result);
 	} catch (error) {
 		const httpError = HttpError(400, error.message);
@@ -89,7 +92,8 @@ export const updateStatusContact = async (req, res) => {
 			throw HttpError(400, error.message);
 		}
 		const { id } = req.params;
-		const result = await updateContactStatus(id, req.body);
+		const { _id: owner } = req.user;
+		const result = await updateContactStatus(id, owner, req.body);
 		if (Object.keys(req.body).length === 0) {
 			return res.status(400).json({ messange: "Body must have at least one field" });
 		}
