@@ -23,16 +23,16 @@ export const addContact = async data => {
 };
 
 export const removeContact = async (contactId, owner) => {
-	const readFileContacts = await Contact.findByIdAndDelete({ _id: contactId, owner });
+	const readFileContacts = await Contact.findOneAndDelete({ _id: contactId, owner });
 	return readFileContacts;
 };
 
 export const contactUpdate = async (contactId, owner, data) => {
-	const readFileContacts = await Contact.findByIdAndUpdate({ _id: contactId, owner }, data, { new: true });
+	const readFileContacts = await Contact.findOneAndUpdate({ _id: contactId, owner }, data, { new: true });
 	return readFileContacts;
 };
 
 export const updateContactStatus = async (contactId, owner, data) => {
-	const readFileContacts = await Contact.findByIdAndUpdate({ _id: contactId, owner }, data, { new: true });
+	const readFileContacts = await Contact.findOneAndUpdate({ _id: contactId, owner }, data, { new: true });
 	return readFileContacts;
 };
